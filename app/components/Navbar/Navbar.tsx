@@ -17,7 +17,7 @@ const Navbar = () => {
     }
 
     return (
-        <nav className='text-white w-full h-16 flex items-center px-4 justify-between bg-black'>
+        <nav className='text-white w-full min-h-16 flex items-center px-4 justify-between bg-black'>
             <Link href="/">
                 <h1 className='text-xl font-bold select-none flex items-center'>
                     <span className='ml-1'>DerNex</span>

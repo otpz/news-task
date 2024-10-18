@@ -23,6 +23,8 @@
     "lucide-react": "^0.453.0",
     "news-task": "file:",
     "next": "14.2.15",
+    "primereact": "^10.8.4",
+    "quill": "^2.0.2",
     "react": "^18",
     "react-dom": "^18",
     "tailwind-merge": "^2.5.4",
