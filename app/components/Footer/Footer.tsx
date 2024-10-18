@@ -1,0 +1,32 @@
+"use client"
+import React from 'react'
+import Link from "next/link";
+
+const Footer = () => {
+    
+    return (
+        <footer className='w-full h-12 flex px-4 border-[1px] border-gray-200'>
+            <div className="w-full flex justify-between items-center">
+                <ul className='font-extralight text-sm max-w-400 flex justify-between items-center gap-6'>
+                    <li className=''>    
+                        <Link href="/">News</Link>
+                    </li>
+                    <li className=''>
+                        <Link href="/signup">Sign Up</Link>
+                    </li>
+                    <li className=''>
+                        <Link href="/signin">Sign In</Link>
+                    </li>
+                </ul>
+                <div className='text-sm text-gray-500'>
+                    Developed by <a className="text-gray-400" href="https://linkedin.com/in/otpz">Osman Topuz</a>
+                </div>
+                <div className='text-sm text-gray-500'>
+                    © 2024 All rights reserved.
+                </div>
+            </div>
+        </footer>
+    )
+}
+
+export default Footer

@@ -1,7 +1,12 @@
-import { sql } from '@vercel/postgres';
-import { drizzle } from 'drizzle-orm/vercel-postgres';
 import { config } from 'dotenv';
+import { drizzle } from 'drizzle-orm/libsql';
+import { createClient } from '@libsql/client';
 
-config({ path: '.env' }); // or .env
+config({ path: '.env' }); // or .env.local
 
-export const db = drizzle(sql);
+const client = createClient({
+  url: process.env.TURSO_CONNECTION_URL!,
+  authToken: process.env.TURSO_AUTH_TOKEN!,
+});
+
+export const db = drizzle(client);
