@@ -55,11 +55,11 @@ export const rolesTable = sqliteTable("Roles", {
 export const usersRoleTable = sqliteTable("UsersRoles", {
     id: integer("Id").primaryKey(),
     userId: integer('UserId')
-    .notNull()
-    .references(() => usersTable.id, { onDelete: 'cascade' }),
+        .notNull()
+        .references(() => usersTable.id, { onDelete: 'cascade' }),
     roleId: integer('RoleId')
-    .notNull()
-    .references(() => usersTable.id, { onDelete: 'cascade' }),
+        .notNull()
+        .references(() => rolesTable.id, { onDelete: 'cascade' }),
     createdDate: text('CreatedDate')
     .default(sql`(CURRENT_TIMESTAMP)`)
     .notNull(),

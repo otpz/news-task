@@ -6,7 +6,7 @@ export const uploadImage = async (imageFile: File) => {
 
     let imagePath = null
 
-    if (!imageFile) return null
+    if (imageFile.size === 0) return null
 
     const uploadDir = path.join(process.cwd(), 'public/uploads') // path to save the file
 
@@ -21,5 +21,5 @@ export const uploadImage = async (imageFile: File) => {
     const fileData = Buffer.from(await imageFile.arrayBuffer())
     fs.writeFileSync(imagePath, fileData)
     
-    return `/public/uploads/${fileName}`
+    return `/uploads/${fileName}`
 } 

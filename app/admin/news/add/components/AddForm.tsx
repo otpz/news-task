@@ -15,7 +15,6 @@ const AddForm = () => {
     const [state, action] = useFormState(createNewsActionAsync, undefined)
 
 
-
     useEffect(() => {
         if (state?.message){
             toast({duration:800, className:"bg-black text-white border-borderColor", title:"Success 🐱‍👤", description:state.message})
@@ -49,7 +48,7 @@ const AddForm = () => {
             {state?.errors?.expireDate && <div className='text-red-500 text-sm'>{state.errors.expireDate}</div>}
             <div className="mb-1">
                 <label htmlFor="image" className="block text-sm font-medium text-gray-500">News Image</label>
-                <input onChange={(e) => setImageFile(e.target.files)} type="file" accept="image/*" id="image" name="image" className="mt-1 block w-64 px-3 py-2 border border-borderColor rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-[rgb(98,162,255)] sm:text-sm" />
+                <input onChange={(e) => setImageFile(e.target.files)} type="file"  id="image" name="image" className="mt-1 block w-64 px-3 py-2 border border-borderColor rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-[rgb(98,162,255)] sm:text-sm" />
             </div>
             <button type='submit' className="mb-1 w-24 bg-black text-white border-borderColor border-[1px] font-bold py-2 px-4 rounded-md text-sm">
                 Save

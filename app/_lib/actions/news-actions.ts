@@ -2,7 +2,7 @@
 import { db } from "@/db";
 import { getAuthUser, isAdmin } from "../dal";
 import { NewsFormSchema, NewsFormState } from "../definitions";
-import { newsTable } from "@/db/schema";
+import { InsertNews, newsImagesTable, newsTable } from "@/db/schema";
 import { revalidatePath } from "next/cache";
 import { eq } from "drizzle-orm";
 import { uploadImage } from "@/helpers/streamImage";
@@ -28,13 +28,19 @@ export const createNewsActionAsync = async (state: NewsFormState, formData: Form
     const imageFile = formData.get('image') as File
     
     const imagePath = await uploadImage(imageFile)
-    console.log(imagePath)
+    
+    let newsImageId: number | null = null
+    if (imagePath){
+        const imageId = await db.insert(newsImagesTable).values({imageName: imagePath}).returning({id: newsImagesTable.id})
+        newsImageId = imageId[0].id
+    }
 
     // update
-    const createNews = {
+    const createNews: InsertNews = {
         subject: validatedFields.data.subject,
         content: validatedFields.data.content,
-        expireDate: validatedFields.data.expireDate
+        expireDate: validatedFields.data.expireDate,
+        imageId: newsImageId
     }
 
     try {
@@ -69,11 +75,28 @@ export const updateNewsActionAsync = async (state: NewsFormState, formData: Form
         return {errors: validatedFields.error.flatten().fieldErrors}
     }
     
+    const formdataImageId = parseInt(formData.get('imageId') as string)
+    const imageFile = formData.get('image') as File
+    
+    const imagePath = await uploadImage(imageFile)
+    
+    let newsImageId: number | null = formdataImageId
+    if (imagePath){
+        if (isNaN(formdataImageId)){
+            const imageId = await db.insert(newsImagesTable).values({imageName: imagePath}).returning({id: newsImagesTable.id})
+            newsImageId = imageId[0].id
+        } else {
+            const imageId = await db.update(newsImagesTable).set({imageName: imagePath}).returning({id: newsImagesTable.id}).where(eq(newsImagesTable.id, formdataImageId))
+            newsImageId = imageId[0].id
+        }
+    }
+
     // update
     const updateNews = {
         subject: validatedFields.data.subject,
         content: validatedFields.data.content,
-        expireDate: validatedFields.data.expireDate
+        expireDate: validatedFields.data.expireDate,
+        imageId: newsImageId
     }
 
     try {

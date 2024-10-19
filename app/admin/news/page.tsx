@@ -46,7 +46,7 @@ import { revalidatePath } from 'next/cache'
                 </thead>
                 <tbody>
                   {news?.map((item) => (  
-                    <TableRow item={item} key={item.id}/>
+                    <TableRow item={item} key={item.News.id}/>
                   ))}
                 </tbody>
             </table>
