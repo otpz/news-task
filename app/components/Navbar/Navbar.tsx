@@ -3,11 +3,26 @@ import React from 'react'
 import Link from 'next/link'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { usePathname } from 'next/navigation'
+import { CiCircleChevDown } from "react-icons/ci";
+import { logoutUserAsync } from '@/app/_lib/actions/auth-actions'
 
-const Navbar = () => {
+interface Props {
+    user: {
+        id: number;
+        name: string;
+        surname: string;
+        email: string;
+        password: string;
+        createdDate: string;
+        updatedDate: Date | null;
+    } | null;
+    isAdmin: boolean;
+}
+
+const Navbar: React.FC<Props> = ({user, isAdmin}) => {
 
     const pathname = usePathname()
-
+    
     const activeLink = (nav: string) => {
         if (pathname === nav) {
             return "text-white"
@@ -28,7 +43,7 @@ const Navbar = () => {
                     <Link className={activeLink("/")} href="/">News</Link>
                 </li>
                 
-                {(!pathname.includes("/profile")) && 
+                {(!user && !pathname.includes("/profile")) && 
                     <>
                         <li className=''>
                             <Link className={activeLink("/signup")} href="/signup">Sign Up</Link>
@@ -38,8 +53,7 @@ const Navbar = () => {
                         </li>
                     </>
                 }
-
-                {/* {user && <span className='h-7 w-[0.5px] bg-borderColor'/>}
+                
                 {user && 
                 <Menu as="div" className="relative inline-block text-left ">
                         <div>
@@ -48,20 +62,16 @@ const Navbar = () => {
                                 <CiCircleChevDown className="mt-[2px] -mr-1 h-5 w-5 text-white"/>
                             </MenuButton>
                         </div>
-
-                        <MenuItems transition className="absolute bg-black right-0 z-10 mt-3 w-40 origin-top-right rounded-md border-borderColor border-2 text-white shadow-lg transition data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in">
+                        <MenuItems className="absolute bg-black right-0 z-10 mt-3 w-40 origin-top-right rounded-md border-[1px] border-blue-400 text-white transition data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in">
                             <div>
-                                <MenuItem>
-                                    <Link href={`/profile/${user.id}`} className="block px-4 py-2 text-sm text-white data-[focus]:bg-gray-800">
-                                        Profile
+                                {isAdmin && 
+                                <MenuItem> 
+                                    <Link href="/admin" className="block w-full px-4 py-2 text-left text-sm text-white data-[focus]:bg-gray-800">
+                                        Admin Dashboard
                                     </Link>
                                 </MenuItem>
-                                <MenuItem>
-                                    <Link href={`/profile/${user.id}/settings`} className="block px-4 py-2 text-sm text-white data-[focus]:bg-gray-800">
-                                        Settings
-                                    </Link>
-                                </MenuItem>
-                                <MenuItem>
+                                }
+                                <MenuItem> 
                                     <button onClick={async () => {await logoutUserAsync()}} className="block w-full px-4 py-2 text-left text-sm text-white data-[focus]:bg-gray-800">
                                         Sign out
                                     </button>
@@ -69,7 +79,7 @@ const Navbar = () => {
                             </div>
                         </MenuItems>
                     </Menu>
-                } */}
+                }
             </ul>
         </nav>
     ) 

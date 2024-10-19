@@ -16,26 +16,25 @@ export const verifySession = cache(async () => {
     }
 
     const userId: number = session.userId as number
-
-    return {isAuth: true, userId: userId}
+    const userRoleId: number = session.roleId as number
+    return {isAuth: true, userId: userId, userRoleId: userRoleId}
 })
 
 export const getAuthUser = cache(async () => {
     const session = await verifySession()
     if (!session) return null
     try {
-        const data = await db.select({
-            id: usersTable.id, 
-            name: usersTable.name, 
-            surname: usersTable.surname,
-            email: usersTable.email,
-        })
-        .from(usersTable)
-        .where(eq(usersTable.id, session.userId))
+        const data = await db.select().from(usersTable).where(eq(usersTable.id, session.userId))
         const user = data[0]
         return user
     } catch (error) {
         console.log('Failed to fetch user', error)
         return null
     }
+})
+
+export const isAdmin = cache(async () => {
+    const session = await verifySession()
+    if (!session) return false
+    return session.userRoleId === 1
 })

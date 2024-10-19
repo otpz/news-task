@@ -1,10 +1,11 @@
 "use server"
 import { db } from "@/db";
-import { InsertUser, usersRoleTable, usersTable } from "@/db/schema";
+import { InsertUser, InsertUserRole, usersRoleTable, usersTable } from "@/db/schema";
 import { comparePassword, hashPassword } from "@/helpers/passwordBcrypt";
 import { eq } from "drizzle-orm";
 import { createSession, deleteSession } from "../session";
 import { SigninFormSchema, SigninFormState, SignupFormSchema, SignupFormState } from "../definitions";
+import { getUserByEmail } from "../queries/user-queries";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -23,6 +24,10 @@ export const signupActionAsync = async (state: SignupFormState, formData: FormDa
     return {errors: validatedFields.error.flatten().fieldErrors}
   }
 
+  if (await getUserByEmail(validatedFields.data.email)){
+    return {errors: {email: ["Email already exists"]}}
+  }
+
   const hashedPassword = await hashPassword(validatedFields.data.password)
 
   const user : InsertUser = {
@@ -34,13 +39,14 @@ export const signupActionAsync = async (state: SignupFormState, formData: FormDa
 
   try {
     const newUserId = await db.insert(usersTable).values(user).returning({id: usersTable.id})
-    const newUserRole = await db.insert(usersRoleTable).values({userId: newUserId[0].id, roleId: 2}) // user role
+    console.log("user id", newUserId)
+    const newUserRoleId = await db.insert(usersRoleTable).values({userId: newUserId[0].id, roleId: 2}).returning({id: usersRoleTable.id})
+    console.log("new user role id", newUserRoleId)
   } catch (error: any) {
-    if (error.code === "SQLITE_CONSTRAINT"){
-      return {errors: {email: ["Email already exists"]}}
-    }
+    console.log(error)
+    return {errors: {email: ["Email already exists"]}}
   }
-
+  
   return {message: "Sign up successful. Redirecting to sign in page."}
 }
 

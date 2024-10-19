@@ -3,6 +3,7 @@ import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 
 export const newsTable = sqliteTable("News", {
     id: integer("Id").primaryKey(),
+    imageId: integer('ImageId').references(() => newsImagesTable.id, { onDelete: 'cascade' }),
     subject: text("Subject").notNull(),
     content: text("Content").notNull(),
     expireDate: text("ExpireDate").notNull(),
@@ -12,11 +13,32 @@ export const newsTable = sqliteTable("News", {
     updatedDate: integer('UpdatedDate', { mode: 'timestamp' }).$onUpdate(() => new Date()),
 })
 
+export const newsImagesTable = sqliteTable("NewsImages", {
+    id: integer("Id").primaryKey(),
+    imageName: text("ImageName").notNull(),
+    imageExtension: text("ImageExtension").notNull(),
+    createdDate: text('CreatedDate')
+    .default(sql`(CURRENT_TIMESTAMP)`)
+    .notNull(),
+    updatedDate: integer('UpdatedDate', { mode: 'timestamp' }).$onUpdate(() => new Date()),
+})
+
 export const annoncementsTable = sqliteTable("Announcements", {
     id: integer("Id").primaryKey(),
+    imageId: integer('ImageId').references(() => annoncementsImageTable.id, { onDelete: 'cascade' }),
     subject: text("Subject").notNull(),
     content: text("Content").notNull(),
     expireDate: text("ExpireDate").notNull(),
+    createdDate: text('CreatedDate')
+    .default(sql`(CURRENT_TIMESTAMP)`)
+    .notNull(),
+    updatedDate: integer('UpdatedDate', { mode: 'timestamp' }).$onUpdate(() => new Date()),
+})
+
+export const annoncementsImageTable = sqliteTable("AnnouncementsImages", {
+    id: integer("Id").primaryKey(),
+    imageName: text("ImageName").notNull(),
+    imageExtension: text("ImageExtension").notNull(),
     createdDate: text('CreatedDate')
     .default(sql`(CURRENT_TIMESTAMP)`)
     .notNull(),
@@ -70,5 +92,11 @@ export type SelectUserRole = typeof usersRoleTable.$inferSelect;
 export type InsertNews = typeof newsTable.$inferInsert;
 export type SelectNews = typeof newsTable.$inferSelect;
 
+export type InsertNewsImage = typeof newsImagesTable.$inferInsert;
+export type SelectNewsImage = typeof newsImagesTable.$inferSelect;
+
 export type InsertAnnouncement = typeof annoncementsTable.$inferInsert;
 export type SelectAnnouncement = typeof annoncementsTable.$inferSelect;
+
+export type InsertAnnouncementImage = typeof annoncementsImageTable.$inferInsert;
+export type SelectAnnouncementImage = typeof annoncementsImageTable.$inferSelect;

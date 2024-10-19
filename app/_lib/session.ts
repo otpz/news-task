@@ -1,6 +1,6 @@
 "use server"
 import { db } from "@/db"
-import { usersRoleTable } from "@/db/schema"
+import { SelectUserRole, usersRoleTable } from "@/db/schema"
 import { eq } from "drizzle-orm"
 import { JWTPayload, SignJWT, jwtVerify} from "jose" // for session encryption
 import { cookies } from "next/headers" // for session cookies
@@ -29,7 +29,7 @@ export async function decrypt(input: string): Promise<JWTPayload> {
 export async function createSession(userId: number, fullName: string) {
     const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000)
 
-    const getUserRole = await db.select().from(usersRoleTable).where(eq(usersRoleTable.userId, userId))
+    const getUserRole: SelectUserRole[] = await db.select().from(usersRoleTable).where(eq(usersRoleTable.userId, userId)).limit(1)
     const roleId = getUserRole[0].roleId
 
     const session = await encrypt({userId, fullName, expiresAt, roleId})

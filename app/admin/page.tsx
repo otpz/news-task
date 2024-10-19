@@ -1,6 +1,9 @@
+import { revalidatePath } from 'next/cache'
 import React from 'react'
 
 const Admin = () => {
+
+  revalidatePath("/admin/", "page")
   return (
     <>
       <div className='font-medium text-sm text-gray-500 cursor-pointer'>
