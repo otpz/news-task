@@ -16,7 +16,6 @@ export const newsTable = sqliteTable("News", {
 export const newsImagesTable = sqliteTable("NewsImages", {
     id: integer("Id").primaryKey(),
     imageName: text("ImageName").notNull(),
-    imageExtension: text("ImageExtension").notNull(),
     createdDate: text('CreatedDate')
     .default(sql`(CURRENT_TIMESTAMP)`)
     .notNull(),
@@ -38,7 +37,6 @@ export const annoncementsTable = sqliteTable("Announcements", {
 export const annoncementsImageTable = sqliteTable("AnnouncementsImages", {
     id: integer("Id").primaryKey(),
     imageName: text("ImageName").notNull(),
-    imageExtension: text("ImageExtension").notNull(),
     createdDate: text('CreatedDate')
     .default(sql`(CURRENT_TIMESTAMP)`)
     .notNull(),
