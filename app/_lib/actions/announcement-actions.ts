@@ -83,11 +83,12 @@ export const updateAnnouncementActionAsync = async (state: AnnouncementsFormStat
     
     let announcementImageId: number | null = formdataImageId
     if (imagePath){
-        if (isNaN(formdataImageId)){
+        console.log("**********",formdataImageId,"**********") 
+        if (isNaN(formdataImageId) || formdataImageId === null){
             const imageId = await db.insert(annoncementsImageTable).values({imageName: imagePath}).returning({id: annoncementsImageTable.id})
             announcementImageId = imageId[0].id
         } else {
-            const imageId = await db.update(annoncementsImageTable).set({imageName: imagePath}).returning({id: annoncementsImageTable.id}).where(eq(annoncementsImageTable.id, formdataImageId))
+            const imageId = await db.update(annoncementsImageTable).set({imageName: imagePath}).where(eq(annoncementsImageTable.id, formdataImageId)).returning({id: annoncementsImageTable.id})
             announcementImageId = imageId[0].id
         }
     }
@@ -107,8 +108,8 @@ export const updateAnnouncementActionAsync = async (state: AnnouncementsFormStat
         return {errorMessage: "An error occurred while updating the announcement."}        
     }
 
-    revalidatePath("/admin/news")
-    revalidatePath(`/admin/news/${announcementId}`)
+    revalidatePath("/admin/announcement")
+    revalidatePath(`/admin/announcement/${announcementId}`)
     return {message: "News updated successfully."}
 }
 

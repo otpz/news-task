@@ -82,11 +82,12 @@ export const updateNewsActionAsync = async (state: NewsFormState, formData: Form
     
     let newsImageId: number | null = formdataImageId
     if (imagePath){
-        if (isNaN(formdataImageId)){
+           
+        if (isNaN(formdataImageId) || formdataImageId === null){
             const imageId = await db.insert(newsImagesTable).values({imageName: imagePath}).returning({id: newsImagesTable.id})
             newsImageId = imageId[0].id
         } else {
-            const imageId = await db.update(newsImagesTable).set({imageName: imagePath}).returning({id: newsImagesTable.id}).where(eq(newsImagesTable.id, formdataImageId))
+            const imageId = await db.update(newsImagesTable).set({imageName: imagePath}).where(eq(newsImagesTable.id, formdataImageId)).returning({id: newsImagesTable.id})
             newsImageId = imageId[0].id
         }
     }

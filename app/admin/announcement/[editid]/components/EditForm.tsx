@@ -51,7 +51,7 @@ const EditForm: React.FC<Props> = ({singleAnnouncement}) => {
     return (
         <form action={action} className='w-full h-full'>
             <input type="hidden" id='id' name='id' value={singleAnnouncement?.Announcements.id}/>
-            <input type="hidden" id="imageId" name='imageId' value={singleAnnouncement?.Announcements?.id} />
+            <input type="hidden" id="imageId" name='imageId' value={singleAnnouncement?.AnnouncementsImages?.id} />
             <div className="mb-1">
                 <label htmlFor="subject" className="block text-sm font-medium text-gray-500">Subject</label>
                 <input value={subject} onChange={(e) => setSubject(e.target.value)} autoComplete='off' type="text" id="subject" name="subject" className="mt-1 block w-full px-3 py-2 border border-borderColor rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-[rgb(98,162,255)] sm:text-sm" required placeholder="Forest Fire" />

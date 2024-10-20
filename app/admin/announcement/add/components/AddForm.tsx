@@ -12,6 +12,13 @@ const AddForm = () => {
     const [expireDate, setExpireDate] = useState<string>("2024-01-01")
     const [imageFile, setImageFile] = useState<FileList | null>(null)
 
+    useEffect(() => {
+        const photo = document.getElementById("photo") as HTMLImageElement
+        if (!imageFile) return
+        const blob = new Blob([imageFile?.item(0) as Blob])
+        photo.src = URL.createObjectURL(blob)
+    }, [imageFile])
+
     const [state, action] = useFormState(createAnnouncementActionAsync, undefined)
 
     useEffect(() => {
@@ -45,9 +52,12 @@ const AddForm = () => {
                 <input value={expireDate} onChange={(e) => setExpireDate(e.target.value)} autoComplete='off' type="date" id="expireDate" name="expireDate" className="mt-1 block w-64 px-3 py-2 border border-borderColor rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-[rgb(98,162,255)] sm:text-sm" required placeholder="Forest Fire" />
             </div>
             {state?.errors?.expireDate && <div className='text-red-500 text-sm'>{state.errors.expireDate}</div>}
-            <div className="mb-1">
-                <label htmlFor="image" className="block text-sm font-medium text-gray-500">Announcement Image</label>
-                <input onChange={(e) => setImageFile(e.target.files)} type="file"  id="image" name="image" className="mt-1 block w-64 px-3 py-2 border border-borderColor rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-[rgb(98,162,255)] sm:text-sm" />
+            <div className='mb-1 flex'>
+                <div>
+                    <label htmlFor="image" className="block text-sm font-medium text-gray-500">Announcement Image</label>
+                    <input onChange={(e) => setImageFile(e.target.files)} type="file"  id="image" name="image" className="mt-1 block w-64 px-3 py-2 border border-borderColor rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-[rgb(98,162,255)] sm:text-sm" />
+                </div>
+                {imageFile && <img id="photo" className='ml-4 w-20 h-20' src="" alt="" />}
             </div>
             <button type='submit' className="mb-1 w-24 bg-black text-white border-borderColor border-[1px] font-bold py-2 px-4 rounded-md text-sm">
                 Save
