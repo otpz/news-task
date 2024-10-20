@@ -77,7 +77,7 @@ const SignUpClientComponent = () => {
               </div>
             )}
 
-            <button className="mb-3 w-full bg-transparent border-borderColor border-[1px] font-bold py-2 px-4 rounded-md home_button text-sm">
+            <button disabled={pending} className="mb-3 w-full bg-transparent border-borderColor border-[1px] font-bold py-2 px-4 rounded-md home_button text-sm">
               Sign Up 
             </button>
         </form>

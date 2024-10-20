@@ -31,7 +31,7 @@ const EditForm: React.FC<Props> = ({singleAnnouncement}) => {
     const [subject, setSubject] = useState(singleAnnouncement?.Announcements.subject)
     const [content, setContent] = useState<string | null>(singleAnnouncement?.Announcements.content ?? '')
     const [expireDate, setExpireDate] = useState(singleAnnouncement?.Announcements.expireDate)
-    const [imageFile, setImageFile] = useState<FileList | null>(null)
+    const [, setImageFile] = useState<FileList | null>(null)
 
     const [state, action] = useFormState(updateAnnouncementActionAsync, undefined)
 

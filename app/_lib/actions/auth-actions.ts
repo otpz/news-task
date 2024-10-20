@@ -1,6 +1,6 @@
 "use server"
 import { db } from "@/db";
-import { InsertUser, InsertUserRole, usersRoleTable, usersTable } from "@/db/schema";
+import { InsertUser, usersRoleTable, usersTable } from "@/db/schema";
 import { comparePassword, hashPassword } from "@/helpers/passwordBcrypt";
 import { eq } from "drizzle-orm";
 import { createSession, deleteSession } from "../session";

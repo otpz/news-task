@@ -2,7 +2,6 @@
 import { revalidatePath } from 'next/cache'
 import React from 'react'
 import { getAllUserAsync } from '../_lib/queries/user-queries'
-import { isAdmin } from '../_lib/dal'
 
 const Admin = async () => {
 
