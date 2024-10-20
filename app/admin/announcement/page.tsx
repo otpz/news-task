@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import React from 'react'
+import TableRow from './components/TableRow'
 
 const AnnouncementPage = () => {
   return (
@@ -59,6 +60,7 @@ const AnnouncementPage = () => {
                     <Link href="/admin/announcement/delete">Delete</Link>
                   </td>
                 </tr>
+                {/* <TableRow /> */}
               </tbody>
           </table>
         </div>
