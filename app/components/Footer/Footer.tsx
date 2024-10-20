@@ -9,7 +9,10 @@ const Footer = () => {
             <div className="w-full flex justify-between items-center">
                 <ul className='font-extralight text-sm max-w-400 flex justify-between items-center gap-6'>
                     <li className=''>    
-                        <Link href="/">News</Link>
+                        <Link href="/news">News</Link>
+                    </li>
+                    <li className=''>    
+                        <Link href="/announcements">Announcements</Link>
                     </li>
                     <li className=''>
                         <Link href="/signup">Sign Up</Link>

@@ -50,6 +50,7 @@ export const createNewsActionAsync = async (state: NewsFormState, formData: Form
         return {errorMessage: "An error occurred while updating the user."}        
     }
 
+    revalidatePath("/news")
     revalidatePath("/admin/news")
     return {message: "News created successfully."}
 }
@@ -107,6 +108,7 @@ export const updateNewsActionAsync = async (state: NewsFormState, formData: Form
         return {errorMessage: "An error occurred while updating the user."}        
     }
 
+    revalidatePath("/news")
     revalidatePath("/admin/news")
     revalidatePath(`/admin/news/${newsId}`)
     return {message: "News updated successfully."}

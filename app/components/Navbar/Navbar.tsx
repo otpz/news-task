@@ -35,12 +35,15 @@ const Navbar: React.FC<Props> = ({user, isAdmin}) => {
         <nav className='text-white w-full min-h-16 flex items-center px-4 justify-between bg-black'>
             <Link href="/">
                 <h1 className='text-xl font-bold select-none flex items-center'>
-                    <span className='ml-1'>DerNex</span>
+                    <span className='ml-1'>Dernek</span>
                 </h1>
             </Link>
             <ul className='max-w-400 flex justify-between items-center gap-6'>
                 <li className='mt-[2px]'>    
-                    <Link className={activeLink("/")} href="/">News</Link>
+                    <Link className={activeLink("/news")} href="/news">News</Link>
+                </li>
+                <li className='mt-[2px]'>    
+                    <Link className={activeLink("/announcement")} href="/announcements">Announcements</Link>
                 </li>
                 
                 {(!user && !pathname.includes("/profile")) && 
