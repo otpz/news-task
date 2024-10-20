@@ -1,9 +1,15 @@
+"use server"
 import { revalidatePath } from 'next/cache'
 import React from 'react'
+import { getAllUserAsync } from '../_lib/queries/user-queries'
+import { isAdmin } from '../_lib/dal'
 
-const Admin = () => {
+const Admin = async () => {
 
   revalidatePath("/admin/", "page")
+
+  const users = await getAllUserAsync()
+
   return (
     <>
       <div className='font-medium text-sm text-gray-500 cursor-pointer'>
@@ -16,13 +22,13 @@ const Admin = () => {
               <thead className="w-full text-xs uppercase bg-gray-700 text-gray-400 sticky top-0">
                 <tr>
                   <th scope="col" className="px-6 py-3">
+                    Id
+                  </th>
+                  <th scope="col" className="px-6 py-3">
                     Full Name
                   </th>
                   <th scope="col" className="px-6 py-3">
                     Email
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Role
                   </th>
                   <th scope="col" className="px-6 py-3">
                     Created Date
@@ -30,20 +36,22 @@ const Admin = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr className="bg-gray-800">
-                  <th scope="row" className="px-6 py-4 font-medium whitespace-nowrap text-white">
-                    Admin Test
-                  </th>
-                  <td className="px-6 py-4 font-medium whitespace-nowrap text-white">
-                    admintest@gmail.com
-                  </td>
-                  <td className="px-6 py-4 font-medium whitespace-nowrap text-white">
-                    ADMIN
-                  </td>
-                  <td className="px-6 py-4 font-medium whitespace-nowrap text-white">
-                    18.10.2024
-                  </td>
-                </tr>
+                {users?.map(user => (
+                  <tr className="bg-gray-800" key={user.id}>
+                    <th scope="row" className="px-6 py-4 font-medium whitespace-nowrap text-white">
+                      {user.id}
+                    </th>
+                    <th scope="row" className="px-6 py-4 font-medium whitespace-nowrap text-white">
+                      {user.name} {user.surname}
+                    </th>
+                    <td className="px-6 py-4 font-medium whitespace-nowrap text-white">
+                      {user.email}
+                    </td>
+                    <td className="px-6 py-4 font-medium whitespace-nowrap text-white">
+                      {user.createdDate}
+                    </td>
+                  </tr>
+                ))}
               </tbody>
           </table>
         </div>

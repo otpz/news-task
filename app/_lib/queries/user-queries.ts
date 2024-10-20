@@ -9,3 +9,9 @@ export const getUserByEmail = async (email: string) => {
 
     return user[0]
 }
+
+export const getAllUserAsync = async () => {
+    const users = await db.select().from(usersTable)
+    if (!users) return null
+    return users
+}
