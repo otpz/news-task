@@ -51,7 +51,7 @@ export const createAnnouncementActionAsync = async (state: AnnouncementsFormStat
         return {errorMessage: "An error occurred while updating the user."}        
     }
 
-    revalidatePath("/announcement")
+    revalidatePath("/announcements")
     revalidatePath("/admin/announcement")
     return {message: "Announcement created successfully."}
 }
@@ -109,7 +109,7 @@ export const updateAnnouncementActionAsync = async (state: AnnouncementsFormStat
         return {errorMessage: "An error occurred while updating the announcement."}        
     }
 
-    revalidatePath("/announcement")
+    revalidatePath("/announcements")
     revalidatePath("/admin/announcement")
     revalidatePath(`/admin/announcement/${announcementId}`)
     return {message: "News updated successfully."}
