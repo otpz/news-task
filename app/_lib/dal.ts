@@ -5,6 +5,7 @@ import { cache } from "react"
 import { usersTable } from "@/db/schema"
 import { db } from "@/db"
 import { eq } from "drizzle-orm"
+import { NextResponse } from "next/server"
 
 export const verifySession = cache(async () => {
 
