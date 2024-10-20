@@ -2,7 +2,7 @@
 import { db } from "@/db";
 import { getAuthUser, isAdmin } from "../dal";
 import { AnnouncementsFormSchema, AnnouncementsFormState } from "../definitions";
-import { annoncementsImageTable, annoncementsTable, InsertAnnouncement, newsImagesTable, newsTable } from "@/db/schema";
+import { annoncementsImageTable, annoncementsTable, InsertAnnouncement} from "@/db/schema";
 import { revalidatePath } from "next/cache";
 import { eq } from "drizzle-orm";
 import { uploadImage } from "@/helpers/streamImage";

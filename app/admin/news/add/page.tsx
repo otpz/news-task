@@ -1,5 +1,4 @@
 "use server"
-import React from 'react'
 import AddForm from './components/AddForm'
 
 const AddNewsPage = () => {

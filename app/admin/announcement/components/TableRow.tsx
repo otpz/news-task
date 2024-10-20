@@ -1,11 +1,11 @@
 "use client"
-// import { deleteNewsActionAsync } from '@/app/_lib/actions/news-actions';
+import { deleteAnnouncementActionAsync } from '@/app/_lib/actions/announcement-actions'
 import React from 'react'
 import { useRouter } from 'next/navigation'
 
 interface Props {
     item: {
-        AnnouncementImages: {
+        AnnouncementsImages: {
             id: number;
             createdDate: string;
             updatedDate: Date | null;
@@ -27,8 +27,6 @@ const TableRow:React.FC<Props> = ({item}) => {
     
     const router = useRouter()
 
-    console.log(item)
-
     return (
         <tr className="bg-gray-800">
             <th scope="row" className="px-6 py-4 font-medium whitespace-nowrap text-white">
@@ -47,9 +45,9 @@ const TableRow:React.FC<Props> = ({item}) => {
                 {item.Announcements.createdDate}
             </td>
             <td className="px-6 py-4 font-medium whitespace-nowrap text-white flex">
-                <button onClick={() => router.push(`/admin/news/${item.Announcements.id}`)}>Edit</button>
+                <button onClick={() => router.push(`/admin/announcement/${item.Announcements.id}`)}>Edit</button>
                 <hr className='mx-2 w-[1px] h-[20px] text-white bg-white'/>
-                {/* <button onClick={async () => await deleteNewsActionAsync(item.Announcements.id)}>Delete</button> */}
+                <button onClick={async () => await deleteAnnouncementActionAsync(item.Announcements.id)}>Delete</button>
             </td>
         </tr>
     )

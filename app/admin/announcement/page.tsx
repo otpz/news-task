@@ -1,8 +1,15 @@
+"use server"
 import Link from 'next/link'
 import React from 'react'
 import TableRow from './components/TableRow'
+import { revalidatePath } from 'next/cache'
+import { getAllAnnouncementAsync } from '@/app/_lib/queries/announcement-queries'
 
-const AnnouncementPage = () => {
+const AnnouncementPage = async () => {
+
+  const announcements = await getAllAnnouncementAsync()
+  revalidatePath("/admin/announcement/[editid]", "page")
+
   return (
     <>
       <div className='font-medium text-sm text-gray-500 cursor-pointer'>
@@ -38,29 +45,9 @@ const AnnouncementPage = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr className="bg-gray-800">
-                  <th scope="row" className="px-6 py-4 font-medium whitespace-nowrap text-white">
-                    1
-                  </th>
-                  <td className="truncate max-w-40 px-6 py-4 font-medium whitespace-nowrap text-white">
-                    Example Example Example Example 
-                  </td>
-                  <td className="truncate max-w-52 px-6 py-4 font-medium whitespace-nowrap text-white">
-                    ExampleExampleExampleExampleExampleExampleExampleExample
-                  </td>
-                  <td className="px-6 py-4 font-medium whitespace-nowrap text-white">
-                    18.10.2024
-                  </td>
-                  <td className="px-6 py-4 font-medium whitespace-nowrap text-white">
-                    18.10.2025
-                  </td>
-                  <td className="px-6 py-4 font-medium whitespace-nowrap text-white flex">
-                    <Link href="/admin/announcement/1">Edit</Link>
-                    <hr className='mx-2 w-[1px] h-[20px] text-white bg-white'/>
-                    <Link href="/admin/announcement/delete">Delete</Link>
-                  </td>
-                </tr>
-                {/* <TableRow /> */}
+                {announcements?.map((item) => (  
+                    <TableRow item={item} key={item.Announcements.id}/>
+                ))}
               </tbody>
           </table>
         </div>

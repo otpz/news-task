@@ -1,9 +1,9 @@
   "use server"
-  import { getAllNewsAsync } from '@/app/_lib/queries/news-queries'
   import Link from 'next/link'
   import React from 'react'
   import TableRow from './components/TableRow'
-import { revalidatePath } from 'next/cache'
+  import { revalidatePath } from 'next/cache'
+  import { getAllNewsAsync } from '@/app/_lib/queries/news-queries'
 
   const NewsPage = async () => {
 

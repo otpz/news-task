@@ -27,8 +27,6 @@ const TableRow:React.FC<Props> = ({item}) => {
     
     const router = useRouter()
 
-    console.log(item)
-
     return (
         <tr className="bg-gray-800">
             <th scope="row" className="px-6 py-4 font-medium whitespace-nowrap text-white">
