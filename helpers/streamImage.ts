@@ -12,7 +12,9 @@ export const uploadImage = async (imageFile: File) => {
 
     if (!fs.existsSync(uploadDir)) {
         fs.mkdirSync(uploadDir, { recursive: true }) // create the directory if it doesn't exist
+        console.log("Directory created")
     }
+    console.log("Directory exists")
     
     const fileName = `${Date.now()}-${imageFile.name}`
     imagePath = path.join(uploadDir, fileName)
