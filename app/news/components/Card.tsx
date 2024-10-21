@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React, { useEffect } from 'react'
 import DOMPurify from 'dompurify';
 import {
     Dialog,
@@ -33,7 +33,11 @@ interface Props {
 
 const Card:React.FC<Props> = ({item}) => {
 
-    const sanitizedContent = DOMPurify.sanitize(item.News.content);
+    const [sanitizedContent, setSanitizedContent] = React.useState<string>('');
+
+    useEffect(() => {
+        setSanitizedContent(DOMPurify.sanitize(item.News.content))
+    }, [])
 
     return (
         <div key={item.News.id} className="relative cursor-pointer w-90 h-84 flex flex-col rounded-lg p-6 shadow-secondary-1 bg-gray-600 text-white">
